@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { bigint, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -24,5 +24,16 @@ export const users = mysqlTable("users", {
 
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
+
+export const potatoOrders = mysqlTable("potatoOrders", {
+  id: int("id").autoincrement().primaryKey(),
+  ticketCode: varchar("ticketCode", { length: 4 }).notNull().unique(),
+  status: mysqlEnum("status", ["pending", "completed"]).default("pending").notNull(),
+  receivedAt: bigint("receivedAt", { mode: "number", unsigned: true }).notNull(),
+  completedAt: bigint("completedAt", { mode: "number", unsigned: true }),
+});
+
+export type PotatoOrder = typeof potatoOrders.$inferSelect;
+export type InsertPotatoOrder = typeof potatoOrders.$inferInsert;
 
 // TODO: Add your tables here

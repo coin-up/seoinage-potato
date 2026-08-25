@@ -10,6 +10,11 @@ export const NOT_ADMIN_ERR_MSG = 'You do not have required permission (10002)';
 // victim's browser.
 export const OAUTH_STATE_COOKIE = "__Host-oauth_state";
 
+/** QRコードから開ける機能入口の種類。セッション値そのものはクライアントへ公開しない。 */
+export type QrAccessMode = "buyer" | "admin" | "combined";
+
+export const TICKET_CODE_PATTERN = /^[A-Z][0-9]{3}$/;
+
 // `state` carries the callback redirect URI (used at token exchange) plus the
 // CSRF nonce. Defined here so the client encoder and server decoder never drift.
 export type OAuthState = { redirectUri: string; nonce?: string };

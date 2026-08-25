@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertPotatoOrder, InsertUser, potatoOrders, users } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -89,4 +89,41 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+export async function getPotatoOrders(search?: string) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot list orders: database not available");
+    return [];
+  }
+
+  const rows = await db.select().from(potatoOrders).orderBy(asc(potatoOrders.receivedAt));
+  const normalizedSearch = search?.trim().toUpperCase();
+  if (!normalizedSearch) return rows;
+
+  return rows.filter(order => order.ticketCode.includes(normalizedSearch));
+}
+
+export async function createPotatoOrder(order: InsertPotatoOrder) {
+  const db = await getDb();
+  if (!db) throw new Error("Database is not available");
+  const result = await db.insert(potatoOrders).values(order);
+  return result[0]?.insertId;
+}
+
+export async function completePotatoOrder(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database is not available");
+  const result = await db
+    .update(potatoOrders)
+    .set({ status: "completed", completedAt: Date.now() })
+    .where(eq(potatoOrders.id, id));
+  return result[0]?.affectedRows ?? 0;
+}
+
+export async function clearPotatoOrders() {
+  const db = await getDb();
+  if (!db) throw new Error("Database is not available");
+  const result = await db.delete(potatoOrders);
+  return result[0]?.affectedRows ?? 0;
+}
+
