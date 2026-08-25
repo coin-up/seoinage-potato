@@ -24,7 +24,10 @@ export function AccessBlocked({ mode }: { mode?: QrAccessMode }) {
       <div className="sp-deco sp-deco-triangle" />
       <div className="sp-deco sp-deco-diamond" />
       <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-2xl items-center justify-center">
-        <section className="sp-card relative w-full max-w-lg bg-cream p-7 text-center sm:p-10">
+        <section className="sp-card relative w-full max-w-lg overflow-hidden bg-cream p-7 text-center sm:p-10">
+          <div className="mb-6 overflow-hidden rounded-2xl border-2 border-ink bg-ink">
+            <img src="/manus-storage/376_d1ff0108.png" alt="谷口の背負い投げポテト広告" className="h-32 w-full object-cover object-center opacity-95 sm:h-40" />
+          </div>
           <div className="mx-auto mb-5 grid h-16 w-16 place-items-center rounded-[22px] bg-red text-yellow shadow-[5px_5px_0_#171513]"><LockKeyhole size={30} strokeWidth={2.5} /></div>
           <p className="sp-kicker mb-3">谷口の背負い投げポテト / {label}</p>
           <h1 className="sp-display text-3xl uppercase leading-tight sm:text-5xl">QRを読み取って<br />受付へ</h1>

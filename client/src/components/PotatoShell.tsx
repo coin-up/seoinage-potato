@@ -49,6 +49,13 @@ export function PotatoShell({ mode, title, eyebrow, description, pendingCount = 
             <StatChip icon={<Check size={15} />} value={completedCount} label="対応済" tone="mint" />
           </div>
         </header>
+        <div className="sp-hero mb-5 sm:mb-7">
+          <img src="/manus-storage/376_d1ff0108.png" alt="揚げたてのフライドポテトと谷口の背負い投げポテト広告" />
+          <div className="sp-hero-copy">
+            <h2>揚げたて、最強。</h2>
+            <p>谷口の背負い投げポテト / うまさ、投げ込め。</p>
+          </div>
+        </div>
         {children}
         <footer className="mt-8 flex flex-col gap-2 border-t-2 border-ink/10 pt-4 text-xs font-bold text-ink/45 sm:flex-row sm:items-center sm:justify-between">
           <span className="inline-flex items-center gap-2"><Hash size={13} /> TICKET DESK / 文化祭運営用</span>

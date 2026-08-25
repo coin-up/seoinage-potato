@@ -44,6 +44,7 @@
   --color-red-dark: var(--red-dark);
   --color-cream: var(--cream);
   --color-ink: var(--ink);
+  --color-coal: var(--coal);
 }
 
 :root {
@@ -52,66 +53,62 @@
   --sidebar-primary: var(--red);
   --sidebar-primary-foreground: var(--cream);
   --radius: 0.9rem;
-  --background: var(--peach);
-  --foreground: var(--ink);
+  --background: var(--coal);
+  --foreground: var(--cream);
   --card: var(--cream);
   --card-foreground: var(--ink);
   --popover: var(--cream);
   --popover-foreground: var(--ink);
   --secondary: var(--yellow);
   --secondary-foreground: var(--ink);
-  --muted: oklch(0.95 0.035 45);
-  --muted-foreground: oklch(0.45 0.035 45);
-  --accent: var(--mint);
+  --muted: oklch(0.28 0.022 53);
+  --muted-foreground: oklch(0.76 0.03 86);
+  --accent: var(--yellow);
   --accent-foreground: var(--ink);
   --destructive: var(--red);
   --destructive-foreground: var(--cream);
-  --border: color-mix(in srgb, var(--ink) 18%, transparent);
-  --input: color-mix(in srgb, var(--ink) 22%, transparent);
-  --ring: var(--red);
-  --sidebar: var(--cream);
-  --sidebar-foreground: var(--ink);
-  --sidebar-accent: var(--mint);
-  --sidebar-accent-foreground: var(--ink);
-  --sidebar-border: color-mix(in srgb, var(--ink) 18%, transparent);
-  --sidebar-ring: var(--red);
-  --peach: oklch(0.93 0.055 48);
-  --mint: oklch(0.86 0.11 165);
-  --mint-strong: oklch(0.56 0.14 165);
-  --lilac: oklch(0.84 0.085 310);
-  --yellow: oklch(0.9 0.17 92);
-  --red: oklch(0.56 0.2 28);
-  --red-dark: oklch(0.47 0.19 28);
-  --cream: oklch(0.98 0.025 86);
-  --ink: oklch(0.18 0.025 50);
-  --chart-1: var(--red);
-  --chart-2: var(--yellow);
-  --chart-3: var(--mint);
-  --chart-4: var(--lilac);
-  --chart-5: var(--ink);
+  --border: oklch(0.94 0.03 86 / 20%);
+  --input: oklch(0.94 0.03 86 / 26%);
+  --ring: var(--yellow);
+  --sidebar: var(--coal);
+  --sidebar-foreground: var(--cream);
+  --sidebar-accent: var(--red);
+  --sidebar-accent-foreground: var(--cream);
+  --sidebar-border: oklch(0.94 0.03 86 / 20%);
+  --sidebar-ring: var(--yellow);
+  --peach: oklch(0.31 0.02 52);
+  --mint: oklch(0.77 0.12 164);
+  --mint-strong: oklch(0.62 0.15 164);
+  --lilac: oklch(0.79 0.09 310);
+  --yellow: oklch(0.87 0.18 90);
+  --red: oklch(0.52 0.2 28);
+  --red-dark: oklch(0.43 0.18 28);
+  --cream: oklch(0.97 0.035 88);
+  --ink: oklch(0.16 0.022 52);
+  --coal: oklch(0.12 0.018 50);
 }
 
 .dark {
-  --background: var(--ink);
+  --background: var(--coal);
   --foreground: var(--cream);
-  --card: oklch(0.25 0.025 50);
+  --card: oklch(0.23 0.025 50);
   --card-foreground: var(--cream);
-  --popover: oklch(0.25 0.025 50);
+  --popover: oklch(0.23 0.025 50);
   --popover-foreground: var(--cream);
   --secondary: var(--yellow);
   --secondary-foreground: var(--ink);
-  --muted: oklch(0.3 0.025 50);
-  --muted-foreground: oklch(0.76 0.03 86);
-  --accent: var(--mint);
+  --muted: oklch(0.28 0.025 50);
+  --muted-foreground: oklch(0.78 0.03 86);
+  --accent: var(--yellow);
   --accent-foreground: var(--ink);
-  --border: oklch(1 0 0 / 15%);
-  --input: oklch(1 0 0 / 18%);
+  --border: oklch(0.94 0.03 86 / 18%);
+  --input: oklch(0.94 0.03 86 / 24%);
   --ring: var(--yellow);
-  --sidebar: oklch(0.25 0.025 50);
+  --sidebar: oklch(0.23 0.025 50);
   --sidebar-foreground: var(--cream);
-  --sidebar-accent: var(--mint);
-  --sidebar-accent-foreground: var(--ink);
-  --sidebar-border: oklch(1 0 0 / 15%);
+  --sidebar-accent: var(--red);
+  --sidebar-accent-foreground: var(--cream);
+  --sidebar-border: oklch(0.94 0.03 86 / 18%);
   --sidebar-ring: var(--yellow);
 }
 
@@ -122,7 +119,7 @@
 
   html {
     min-width: 320px;
-    background: var(--peach);
+    background: var(--coal);
   }
 
   body {
@@ -163,8 +160,9 @@
   .sp-app,
   .sp-gate {
     position: relative;
-    background-color: var(--peach);
-    background-image: radial-gradient(circle at 12% 15%, rgb(255 255 255 / 35%) 0 2px, transparent 3px), radial-gradient(circle at 85% 78%, rgb(255 255 255 / 28%) 0 1px, transparent 2px);
+    background-color: var(--coal);
+    background-image: radial-gradient(circle at 18% 12%, rgb(255 197 38 / 13%) 0 2px, transparent 3px), radial-gradient(circle at 84% 68%, rgb(196 37 31 / 18%) 0 2px, transparent 3px), linear-gradient(135deg, transparent 0 49.5%, rgb(255 209 65 / 7%) 50% 50.2%, transparent 50.3% 100%);
+    background-size: 46px 46px, 68px 68px, 78px 78px;
   }
 
   .sp-app::before,
@@ -173,18 +171,27 @@
     inset: 0;
     pointer-events: none;
     content: "";
-    opacity: 0.28;
-    background-image: linear-gradient(115deg, transparent 0 49.5%, rgb(24 19 15 / 12%) 50% 50.2%, transparent 50.3% 100%);
-    background-size: 60px 60px;
-    mix-blend-mode: multiply;
+    background-image: linear-gradient(115deg, transparent 0 49.5%, rgb(255 255 255 / 6%) 50% 50.2%, transparent 50.3% 100%);
+    background-size: 56px 56px;
+    mix-blend-mode: screen;
   }
 
   .sp-display {
     font-family: "Bowlby One SC", "M PLUS Rounded 1c", sans-serif;
     font-weight: 900;
     letter-spacing: -0.045em;
+    color: var(--cream);
+    text-shadow: 3px 3px 0 rgb(0 0 0 / 75%);
+  }
+
+  .sp-card .sp-display {
     color: var(--ink);
-    text-shadow: 3px 3px 0 rgb(255 255 255 / 55%);
+    text-shadow: 2px 2px 0 rgb(255 199 34 / 55%);
+  }
+
+  .sp-card.bg-red .sp-display {
+    color: var(--yellow);
+    text-shadow: 2px 2px 0 rgb(0 0 0 / 70%);
   }
 
   .sp-kicker {
@@ -192,7 +199,7 @@
     align-items: center;
     gap: 0.35rem;
     border-radius: 999px;
-    padding: 0.45rem 0.75rem;
+    padding: 0.48rem 0.78rem;
     font-size: 0.66rem;
     font-weight: 900;
     letter-spacing: 0.12em;
@@ -202,8 +209,13 @@
 
   .sp-card {
     border: 2px solid var(--ink);
-    border-radius: 1.35rem;
-    box-shadow: 7px 7px 0 var(--ink);
+    border-radius: 1.2rem;
+    box-shadow: 7px 7px 0 var(--red);
+  }
+
+  .sp-card.bg-ink {
+    border-color: var(--yellow);
+    box-shadow: 7px 7px 0 var(--red);
   }
 
   .sp-mini-card,
@@ -212,8 +224,8 @@
     align-items: center;
     gap: 0.65rem;
     border: 2px solid var(--ink);
-    border-radius: 1rem;
-    box-shadow: 4px 4px 0 var(--ink);
+    border-radius: 0.9rem;
+    box-shadow: 4px 4px 0 var(--red);
     padding: 0.8rem 1rem;
   }
 
@@ -240,13 +252,63 @@
 
   .sp-order-row:hover {
     transform: translateY(-2px);
-    box-shadow: 3px 5px 0 rgb(24 19 15 / 17%);
+    box-shadow: 3px 5px 0 rgb(0 0 0 / 30%);
   }
 
   .sp-skeleton {
-    background: linear-gradient(100deg, rgb(24 19 15 / 7%) 30%, rgb(24 19 15 / 14%) 50%, rgb(24 19 15 / 7%) 70%);
+    background: linear-gradient(100deg, rgb(0 0 0 / 8%) 30%, rgb(255 199 34 / 24%) 50%, rgb(0 0 0 / 8%) 70%);
     background-size: 200% 100%;
     animation: sp-shimmer 1.2s linear infinite;
+  }
+
+  .sp-hero {
+    position: relative;
+    overflow: hidden;
+    border: 2px solid var(--yellow);
+    border-radius: 1.2rem;
+    background: var(--ink);
+    box-shadow: 7px 7px 0 var(--red);
+    isolation: isolate;
+  }
+
+  .sp-hero img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 5;
+    object-fit: cover;
+    object-position: center 48%;
+    opacity: 0.9;
+  }
+
+  .sp-hero::after {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    content: "";
+    background: linear-gradient(90deg, rgb(0 0 0 / 64%), transparent 58%, rgb(0 0 0 / 22%));
+  }
+
+  .sp-hero-copy {
+    position: absolute;
+    inset: auto auto 1.1rem 1.2rem;
+    max-width: 24rem;
+  }
+
+  .sp-hero-copy h2 {
+    color: var(--cream);
+    font-family: "Bowlby One SC", "M PLUS Rounded 1c", sans-serif;
+    font-size: clamp(1.8rem, 5vw, 3.4rem);
+    line-height: 0.98;
+    text-shadow: 3px 3px 0 var(--red);
+  }
+
+  .sp-hero-copy p {
+    margin-top: 0.55rem;
+    color: var(--cream);
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
   }
 
   .sp-deco {
@@ -260,9 +322,10 @@
     right: -4.5rem;
     width: 11rem;
     height: 11rem;
-    border: 3px solid var(--ink);
+    border: 3px solid var(--yellow);
     border-radius: 50%;
-    background: var(--mint);
+    background: var(--red);
+    opacity: 0.8;
     transform: rotate(8deg);
   }
 
@@ -271,7 +334,7 @@
     left: -3.5rem;
     width: 8rem;
     height: 8rem;
-    border: 3px solid var(--ink);
+    border: 3px solid var(--red);
     border-radius: 50%;
     background: var(--yellow);
   }
@@ -282,10 +345,10 @@
     width: 0;
     height: 0;
     border-right: 28px solid transparent;
-    border-bottom: 48px solid var(--red);
+    border-bottom: 48px solid var(--yellow);
     border-left: 28px solid transparent;
     transform: rotate(-18deg);
-    filter: drop-shadow(3px 3px 0 var(--ink));
+    filter: drop-shadow(3px 3px 0 var(--red));
   }
 
   .sp-deco-diamond {
@@ -293,8 +356,8 @@
     right: 15%;
     width: 1.5rem;
     height: 1.5rem;
-    border: 3px solid var(--ink);
-    background: var(--lilac);
+    border: 3px solid var(--yellow);
+    background: var(--red);
     transform: rotate(45deg);
   }
 
@@ -303,8 +366,8 @@
     right: 5%;
     width: 4.5rem;
     height: 1.7rem;
-    border-top: 4px solid var(--ink);
-    border-bottom: 4px solid var(--ink);
+    border-top: 4px solid var(--yellow);
+    border-bottom: 4px solid var(--yellow);
     transform: rotate(-28deg);
   }
 
@@ -313,20 +376,51 @@
     left: 8%;
     width: 4rem;
     height: 4rem;
-    background-image: radial-gradient(var(--ink) 2px, transparent 2.5px);
+    background-image: radial-gradient(var(--yellow) 2px, transparent 2.5px);
     background-size: 12px 12px;
   }
 
   .sp-sticker {
     border: 2px solid var(--ink);
     border-radius: 0.35rem;
-    box-shadow: 3px 3px 0 var(--ink);
+    box-shadow: 3px 3px 0 var(--red);
+  }
+
+  .sp-notice {
+    border: 2px solid var(--red);
+    border-left-width: 8px;
+    border-radius: 0.9rem;
+    background: var(--yellow);
+    color: var(--ink);
+    box-shadow: 4px 4px 0 var(--red);
   }
 }
 
 @keyframes sp-shimmer {
   from { background-position: 200% 0; }
   to { background-position: -200% 0; }
+}
+
+@media (max-width: 639px) {
+  .sp-hero img {
+    aspect-ratio: 4 / 3;
+    object-position: center center;
+  }
+
+  .sp-hero-copy {
+    inset: auto 0 0;
+    max-width: none;
+    padding: 3rem 1rem 1rem;
+    background: linear-gradient(transparent, rgb(0 0 0 / 80%));
+  }
+
+  .sp-hero-copy h2 {
+    font-size: 2rem;
+  }
+
+  .sp-hero-copy p {
+    font-size: 0.68rem;
+  }
 }
 
 @media (min-width: 640px) {

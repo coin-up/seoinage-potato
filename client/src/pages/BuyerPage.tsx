@@ -11,7 +11,13 @@ export default function BuyerPage() {
   return (
     <PotatoShell mode="buyer" title="受付はここから。" eyebrow="購入者受付" description="QRチケットの番号を入力して、お受け取りの受付を完了してください。">
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1.35fr)_minmax(280px,0.65fr)]">
-        <TicketForm />
+        <div>
+          <TicketForm />
+          <div className="sp-notice mt-4 p-4 sm:p-5">
+            <p className="text-xs font-black uppercase tracking-[0.12em] text-red">ご注文のタイミング</p>
+            <p className="mt-2 text-sm font-black leading-6 sm:text-base">ご来店の10～15分前に注文してください。揚げる時間により多少前後する場合があります。ご了承ください。</p>
+          </div>
+        </div>
         <aside className="space-y-4">
           <div className="sp-card bg-red p-6 text-cream sm:p-7">
             <div className="mb-5 flex items-center justify-between"><span className="sp-kicker bg-yellow text-ink">HOW TO GET</span><Flame size={28} className="text-yellow" fill="currentColor" /></div>

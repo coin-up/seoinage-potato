@@ -19,3 +19,17 @@
 
 - The attached combined QR path `/buyer-a7k9m2x5q8r3` redirected to `/combined` and rendered intake, search, pending, completed, and reset controls.
 - Clicking the reset control opened a real modal confirmation dialog with accessible cancel and destructive-action buttons.
+
+## Visual redesign verification
+
+The attached advertising image is loaded from `/manus-storage/376_d1ff0108.png` in the shared functional-page hero and in the QR gate. The combined page was opened through the attached QR path and visually confirmed with the new coal-black background, red/gold/cream cards, high-contrast typography, and management controls. The buyer page includes the requested timing notice: `ご来店の10～15分前に注文してください。揚げる時間により多少前後する場合があります。ご了承ください。`
+
+The input and action controls now explicitly use dark text on cream fields, larger semibold labels and help text, cream text on red action buttons, visible focus rings, and pressed-state shadows. The combined-page reset trigger and modal actions have matching explicit typography, contrast, and focus styles. After these changes, `pnpm check`, all 8 Vitest tests, and `pnpm build` passed; the buyer and combined pages were visually checked at desktop and mobile widths.
+
+## Post-redesign browser flow
+
+A Playwright run opened the buyer and combined QR entries in two browser pages. It successfully registered `Z999` from the buyer page, observed the ticket in the combined page, filtered it with `Z9`, moved it to completed, and cleared the single test row. The final empty-state checks passed. The script deliberately refuses to mutate the database when unrelated existing rows are detected; the only test row created during this verification was cleaned up afterward.
+
+The same run also served as the live cross-page synchronization check because the buyer and combined pages stayed open simultaneously while the register mutation was reflected in the management page.
+
+The expanded live browser verification kept one buyer page and two combined management pages open simultaneously. It passed all three cross-page checks: registration appeared in both management pages, completion removed the ticket from pending and placed it in completed on both, and clear-all removed it from both pages. The single test row was cleared at the end.

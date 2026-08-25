@@ -38,24 +38,24 @@ export default function CombinedPage() {
         <div className="space-y-4">
           <TicketForm compact />
           <section className="sp-card bg-ink p-5 text-cream sm:p-6">
-            <div className="flex items-start gap-3"><Settings2 className="mt-0.5 shrink-0 text-yellow" size={20} /><div><h2 className="font-black">運営ツール</h2><p className="mt-2 text-xs font-semibold leading-5 text-cream/60">列をリセットして、次の時間帯の受付を始めるときに使います。</p></div></div>
+            <div className="flex items-start gap-3"><Settings2 className="mt-0.5 shrink-0 text-yellow" size={20} /><div><h2 className="text-lg font-black text-cream">運営ツール</h2><p className="mt-2 text-sm font-semibold leading-5 text-cream/75">列をリセットして、次の時間帯の受付を始めるときに使います。</p></div></div>
             <AlertDialog open={clearOpen} onOpenChange={setClearOpen}>
               <AlertDialogTrigger asChild>
-                <Button variant="outline" className="mt-5 h-11 w-full rounded-xl border-2 border-cream/30 bg-transparent font-black text-cream hover:bg-cream/10 hover:text-cream"><RotateCcw size={16} /> 全データを初期化</Button>
+                <Button variant="outline" className="sp-button mt-5 h-12 w-full rounded-xl border-2 border-cream/70 bg-transparent text-base font-black text-cream shadow-[3px_3px_0_var(--red)] hover:bg-cream/10 hover:text-cream focus-visible:ring-4 focus-visible:ring-yellow/70"><RotateCcw size={16} /> 全データを初期化</Button>
               </AlertDialogTrigger>
               <AlertDialogContent className="border-2 border-ink bg-cream text-ink shadow-[7px_7px_0_#171513]">
                 <AlertDialogHeader>
                   <AlertDialogTitle className="flex items-center gap-2 text-xl font-black"><AlertTriangle className="text-red" size={22} />全データを初期化しますか？</AlertDialogTitle>
-                  <AlertDialogDescription className="font-semibold leading-6 text-ink/65">未対応・対応済みを含む、すべての受付データを削除します。この操作は元に戻せません。</AlertDialogDescription>
+                  <AlertDialogDescription className="text-sm font-semibold leading-6 text-ink/80">未対応・対応済みを含む、すべての受付データを削除します。この操作は元に戻せません。</AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel disabled={clearAll.isPending} className="rounded-xl border-2 border-ink bg-transparent font-black text-ink">キャンセル</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleClear} disabled={clearAll.isPending} className="rounded-xl bg-red font-black text-cream hover:bg-red-dark">{clearAll.isPending ? "削除中…" : "初期化する"}</AlertDialogAction>
+                  <AlertDialogCancel disabled={clearAll.isPending} className="sp-button rounded-xl border-2 border-ink bg-cream text-sm font-black text-ink shadow-[2px_2px_0_var(--ink)]">キャンセル</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleClear} disabled={clearAll.isPending} className="sp-button rounded-xl bg-red px-5 text-sm font-black text-cream shadow-[3px_3px_0_var(--ink)] hover:bg-red-dark focus-visible:ring-4 focus-visible:ring-yellow/70">{clearAll.isPending ? "削除中…" : "初期化する"}</AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
           </section>
-          <p className="px-2 text-xs font-bold leading-5 text-ink/50">運営メモ：同じチケット番号の重複受付は自動で防止されます。</p>
+          <p className="px-2 text-sm font-bold leading-5 text-ink/75">運営メモ：同じチケット番号の重複受付は自動で防止されます。</p>
         </div>
         <OrderBoard />
       </div>
