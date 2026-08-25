@@ -33,3 +33,11 @@ A Playwright run opened the buyer and combined QR entries in two browser pages. 
 The same run also served as the live cross-page synchronization check because the buyer and combined pages stayed open simultaneously while the register mutation was reflected in the management page.
 
 The expanded live browser verification kept one buyer page and two combined management pages open simultaneously. It passed all three cross-page checks: registration appeared in both management pages, completion removed the ticket from pending and placed it in completed on both, and clear-all removed it from both pages. The single test row was cleared at the end.
+
+## Participant page reading order
+
+The participant page now presents the order-timing notice, input checks, pickup steps, and help guidance before the ticket form. A final instruction explicitly directs the participant to enter the ticket at the bottom. The mobile full-page preview confirmed that the notice and instructions are readable before the form and that the form remains usable at 390px width.
+
+Created `文化祭用操作マニュアル.md` with QR entry URLs, participant flow, staff roles, pending/completed handling, search, reset confirmation, synchronization guidance, troubleshooting, and a pre-opening checklist.
+
+After moving the participant form to the bottom, the live browser flow was rerun successfully: the buyer page accepted `Z999` from the bottom form after the notices, the management pages received it, and the subsequent search, completion, and cleanup steps passed. The test row was removed at the end.
