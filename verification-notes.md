@@ -76,3 +76,13 @@ Project evidence: `package.json` builds both `vite build` and an Express entrypo
 GitHub official documentation states that GitHub Pages is a static site hosting service for HTML, CSS, and JavaScript, and that custom workflows can build and deploy static artifacts. It also states that GitHub Pages does not support server-side languages. References: https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages ; https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site ; https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages.
 
 Practical options: keep the current full-stack architecture and host the frontend plus Express/tRPC/SSE plus MySQL on separate services; or convert the app to a static frontend and replace the backend with externally hosted serverless APIs/database services. GitHub Pages alone is sufficient only for a non-persistent demo or static UI, not for the current multi-device order management system.
+
+## GitHub公開前監査とREADME
+
+Git追跡対象を対象に、秘密鍵ファイル・`.env`系・GitHubトークン形式・主要APIキー形式・MySQL接続文字列・環境変数への実値代入を検索した。該当する秘密情報は検出されなかった。追跡対象のSQLはスキーマ／マイグレーションのみで、注文データのCSV・SQLite・DBファイルは検出されなかった。READMEにはNode Web Service、build/start、環境変数、MySQL、QR入口、当日の利用方法、初期化注意事項を記載した。
+
+GitHub公開リポジトリ `coin-up/seoinage-potato` の存在と公開状態は確認済みだが、現在の接続ではpush時に403 Permission deniedが返ったため、README更新と最新コードの公開後表示確認はGitHub側の書き込み権限復旧後に行う必要がある。
+
+## 60b7a7c2後の利用案内記録
+
+60b7a7c2チェックポイント後、ユーザーへ次の公開サイトURLを案内した: `https://seoinagepota-fbjzzh6l.manus.space/`。QR入口URLとして、参加者用 `https://<本番ドメイン>/buyer-only-x5k9m2a7q8r3`、管理者用 `https://<本番ドメイン>/admin-b4n6p1j9w2e8`、購入・管理両用 `https://<本番ドメイン>/buyer-a7k9m2x5q8r3` を案内した。文化祭用操作マニュアルはプロジェクト内の`文化祭用操作マニュアル.md`で、QR入口、参加者受付、管理者の検索・対応済み移動、両用ページの初期化、トラブル対応を確認できると案内した。公開URLはその後「Site unavailable due to unpaid billing」となっているため、本番利用には公開状態の復旧が必要である。
