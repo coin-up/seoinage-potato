@@ -66,3 +66,13 @@ The configured production domain remains unavailable because Manus reports unpai
 ## Manual upload recheck safety note
 
 The manual-upload recheck opened the current buyer, admin, and combined QR aliases successfully. A destructive end-to-end run was intentionally not performed because the management board already contained 4 pending and 5 completed live rows; the verification script refused to mutate or clear unrelated data. Existing end-to-end operation coverage remains documented from the controlled empty-state run, and the current manual-to-site comparison confirms the same routes and controls. The configured production domain still reports Manus unpaid-billing unavailability, so production URL verification remains pending until hosting is restored.
+
+## GitHub Pages-only feasibility review
+
+Conclusion: The current application cannot run completely on GitHub Pages alone. GitHub Pages serves static HTML, CSS, and JavaScript, and can run a build process via GitHub Actions, but it does not provide a persistent Node/Express runtime, a tRPC server endpoint, a MySQL database, an SSE stream, or server-side HttpOnly QR-session issuance. The repository can host the compiled Vite frontend, but the current backend and database must remain on a separate server/platform.
+
+Project evidence: `package.json` builds both `vite build` and an Express entrypoint with esbuild; `server/_core/index.ts` creates the Express server and mounts tRPC; `server/db.ts` uses Drizzle with `drizzle-orm/mysql2` and `DATABASE_URL`; `server/realtime.ts` sends `text/event-stream`; `client/src/hooks/useRealtimeSync.ts` opens an `EventSource`; and `server/qrAccess.ts` handles QR access sessions on the server.
+
+GitHub official documentation states that GitHub Pages is a static site hosting service for HTML, CSS, and JavaScript, and that custom workflows can build and deploy static artifacts. It also states that GitHub Pages does not support server-side languages. References: https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages ; https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site ; https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages.
+
+Practical options: keep the current full-stack architecture and host the frontend plus Express/tRPC/SSE plus MySQL on separate services; or convert the app to a static frontend and replace the backend with externally hosted serverless APIs/database services. GitHub Pages alone is sufficient only for a non-persistent demo or static UI, not for the current multi-device order management system.
