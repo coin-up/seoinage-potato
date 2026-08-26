@@ -6,6 +6,14 @@
 
 RenderのWeb ServiceでもExpressアプリをGitHubからデプロイできますが、現在のアプリはMySQLを必要とするため、MySQLを別途用意して`DATABASE_URL`を設定する必要があります。[3] [4]
 
+## 料金・無料枠の注意
+
+Railwayの現行料金ページでは、Freeは月額0ドル・月1ドル分の利用クレジット、1サービスあたり最大1 vCPU／0.5 GB、1レプリカです。30日間・5ドル分のFree Trialもありますが、無料枠は利用量の上限があるため、文化祭本番ではDashboardの使用量と課金設定を必ず確認してください。[5]
+
+RenderのFree Web Serviceは、15分間インバウンド通信がないと停止し、再アクセス時の起動に約1分かかる場合があります。Render公式はFreeインスタンスを本番アプリに使わないよう案内しています。また、Renderの標準無料データストアは本アプリが必要とするMySQLではないため、Renderを選ぶ場合はMySQL Private ServiceとDisk、または別のTLS対応MySQLサービスが必要です。[6] [7]
+
+本番の文化祭で停止や起動待ちを避けたい場合、無料枠だけでの運用を前提にせず、選択したサービスの有料プラン、利用上限、バックアップ機能を事前に確認してください。
+
 ## 推奨構成
 
 | 役割 | サービス | 必要条件 |
@@ -112,7 +120,7 @@ pnpm db:push
 
 ### 6. SSEとQRセッションを確認する
 
-このアプリは、管理画面から`/api/realtime`へSSE接続し、`text/event-stream`で変更イベントを受け取ります。Web Serviceは静的ホスティングではなく、NodeプロセスがHTTP接続を処理できる構成にしてください。リバースプロキシやアイドルタイムアウトがSSE接続を途中で切る場合は、アプリの短時間自動再接続・再取得がフォールバックとして機能します。
+このアプリは、管理画面から`/api/realtime`へSSE接続し、`text/event-stream`で変更イベントを受け取ります。Web Serviceは静的ホスティングではなく、NodeプロセスがHTTP接続を処理できる構成にしてください。Railway公式ガイドではSSEに15分のリクエスト上限があり、5分以上データがないと切断されるため、5分以内のheartbeatと再接続が必要とされています。本アプリは15秒間隔のheartbeat、ブラウザのEventSource再接続、自動再取得フォールバックを実装しています。[8] RenderではFree Web Serviceの停止・起動待ちがSSEや受付開始時の体感に影響する可能性があるため、文化祭前に実際のプランで接続維持を確認してください。
 
 QR入口は`/api/qr/access`でサーバー側のQRトークンを検証し、HttpOnly Cookieを発行します。HTTPSで公開し、CookieのSecure条件を満たしてください。公開ドメインが決まったら、既存QR入口のドメイン部分だけを本番ドメインへ置き換えます。
 
@@ -155,3 +163,7 @@ GitHubリポジトリの公開とWebサイトの本番公開は別です。GitHu
 [2]: https://docs.railway.com/databases/mysql "MySQL — Railway Docs"
 [3]: https://render.com/docs/deploy-node-express-app "Deploy a Node Express App on Render"
 [4]: https://render.com/docs/configure-environment-variables "Environment Variables and Secrets — Render Docs"
+[5]: https://railway.com/pricing "Railway Pricing"
+[6]: https://render.com/docs/free "Deploy for Free — Render Docs"
+[7]: https://render.com/docs/deploy-mysql "Deploy MySQL — Render Docs"
+[8]: https://docs.railway.com/guides/sse-vs-websockets "Choose Between SSE and WebSockets — Railway Docs"

@@ -94,3 +94,25 @@ GitHub連携をDisconnect／再接続し、対象リポジトリ`coin-up/seoinag
 最新`main`コミット`770995751d29aa511784615e779a21c363a2fc31`に対してGitHub APIで再確認した。`README.md`（5,065 bytes、https://github.com/coin-up/seoinage-potato/blob/main/README.md）と`GitHubからのデプロイ手順.md`（11,576 bytes、https://github.com/coin-up/seoinage-potato/blob/main/GitHub%E3%81%8B%E3%82%89%E3%81%AE%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E6%89%8B%E9%A0%86.md）は、いずれも最新main上で取得・表示確認できた。
 
 GitHub再接続後の公開結果をユーザーへ案内した。403は解消され、現行プロジェクト140ファイルを`coin-up/seoinage-potato`の`main`へ反映済み。最新コミットは`770995751d29aa511784615e779a21c363a2fc31`。README URLは`https://github.com/coin-up/seoinage-potato/blob/main/README.md`、デプロイ手順URLは`https://github.com/coin-up/seoinage-potato/blob/main/GitHub%E3%81%8B%E3%82%89%E3%81%AE%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E6%89%8B%E9%A0%86.md`。
+
+## バックアップ・障害時運用手順の追加確認
+
+文化祭当日のバックアップ、紙運用、重複注文防止、復旧後の照合、復元・初期化判断を`文化祭当日バックアップ・障害時運用.md`へ追加し、既存の`文化祭用操作マニュアル.md`と`README.md`から参照できるようにした。追加後、`pnpm check`、`pnpm test`（4ファイル・9テスト）、`pnpm build`がすべて成功した。ビルド時には既存のチャンクサイズ警告のみが表示され、エラーは発生していない。
+
+## 外部ホスティング現行条件の確認（2026-08-27）
+
+Railway公式料金ページでは、Freeは月額0ドル・月1ドル分の利用クレジット、1サービスあたり最大1 vCPU／0.5 GB、1レプリカであり、Free Trialは30日間5ドル分のクレジットと記載されている。したがって、Railwayは「完全無料で無期限」とは案内せず、無料枠の利用上限と課金設定を確認して使う必要がある。参照: https://railway.com/pricing
+
+Railway公式のSSEガイドでは、SSEは標準HTTPで動作する一方、15分のリクエスト上限があり、5分以上データがないと切断されるため、少なくとも5分以内のheartbeatと再接続が必要と説明されている。本アプリは15秒間隔のSSE heartbeat、ブラウザのEventSource再接続、自動再取得フォールバックを実装している。参照: https://docs.railway.com/guides/sse-vs-websockets
+
+Render公式の無料枠ページでは、Free Web Serviceは15分間インバウンド通信がないと停止し、再起動に約1分かかること、Freeは本番アプリには使用しないよう明記されている。Renderの無料データストアはPostgres／Key Valueであり、本アプリのMySQL構成を無料の標準DBだけで置き換えることはできない。参照: https://render.com/docs/free
+
+Render公式のMySQL手順では、MySQLはDockerのPrivate Serviceとして構成し、`/var/lib/mysql`にDiskを接続する必要があり、バックアップはディスクスナップショットではなく`mysqldump`等のDB推奨ツールを使うよう記載されている。参照: https://render.com/docs/deploy-mysql
+
+Railway公式のVariablesページでは、サービスのVariablesタブで環境変数を登録し、変更後にレビューしてDeployする必要があること、サービス間参照変数（例:`DATABASE_URL=${{ MySQL.MYSQL_URL }}`）とsealed variablesが利用できることを確認した。参照: https://docs.railway.com/variables
+
+Railway公式のPublic Networkingページでは、公開ドメインのGenerate Domain、Railway提供ドメイン、無料SSL証明書の自動発行・更新、カスタムドメイン対応が確認できる。参照: https://docs.railway.com/networking/public-networking
+
+Render公式のEnvironment Variablesページでは、DashboardのEnvironmentからキーと値を登録し、Save, rebuild, and deploy／Save and deploy／Save onlyを選択できること、秘密情報をソースへコミットしないことを確認した。参照: https://render.com/docs/configure-environment-variables
+
+Render公式のTLSページでは、`onrender.com`サブドメインとカスタムドメインに無料のマネージドTLSが提供され、HTTPはHTTPSへ自動リダイレクトされることを確認した。参照: https://render.com/docs/tls
