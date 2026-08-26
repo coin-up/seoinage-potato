@@ -83,7 +83,14 @@
 - [x] GitHub公開リポジトリのREADMEへセットアップ・環境変数・利用方法を記載する（ローカル準備完了。GitHub側のpush権限復旧後に公開後表示を確認）
 - [x] 60b7a7c2チェックポイント後に案内したサイトURL・QR入口URL・マニュアル利用方法を verification-notes.md へ実際に追記する
 - [x] 追記後に verification-notes.md 内の該当記録を確認してTODOへ反映する
-- [ ] 現在のGitHub連携のUID・有効状態・対象アカウントを確認する
-- [ ] 現在のGitHub連携を無効化して接続状態をリセットする
-- [ ] GitHubへ再接続し、対象リポジトリへの書き込み権限を確認する
-- [ ] 再接続後のGitHub公開手順と403解消状況を案内する
+- [x] 現在のGitHub連携のUID・有効状態・対象アカウントを確認する
+- [x] 現在のGitHub連携を無効化して接続状態をリセットする
+- [x] GitHubへ再接続し、対象リポジトリへの書き込み権限を確認する
+- [x] 再接続後のGitHub公開手順と403解消状況を案内する
+- [x] GitHub APIで確認済みの書き込み権限をGit HTTPS pushへ安全に反映し、公開リポジトリへpushする（API経由でmainへ反映）
+- [x] push成功後にGitHub上の最新コミットとREADME・デプロイ手順の表示を確認する
+- [x] GitHub上で `GitHubからのデプロイ手順.md` の存在と表示URLを確認し、結果を verification-notes.md に記録する
+- [x] 最新コミットに `README.md` と `GitHubからのデプロイ手順.md` の両方が含まれることをAPIで確認してTODOへ反映する
+- [x] 再接続後のGitHub公開結果（403解消、main反映成功、確認したURL）をユーザー向けメッセージで案内し、その記録を残す
+- [x] GitHub上の `GitHubからのデプロイ手順.md` の存在と表示URLを verification-notes.md に追記する
+- [x] 最新mainコミットSHAで `README.md` と `GitHubからのデプロイ手順.md` の両方をAPI確認し、その結果を検証メモへ記録する

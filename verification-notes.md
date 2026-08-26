@@ -86,3 +86,11 @@ GitHub公開リポジトリ `coin-up/seoinage-potato` の存在と公開状態�
 ## 60b7a7c2後の利用案内記録
 
 60b7a7c2チェックポイント後、ユーザーへ次の公開サイトURLを案内した: `https://seoinagepota-fbjzzh6l.manus.space/`。QR入口URLとして、参加者用 `https://<本番ドメイン>/buyer-only-x5k9m2a7q8r3`、管理者用 `https://<本番ドメイン>/admin-b4n6p1j9w2e8`、購入・管理両用 `https://<本番ドメイン>/buyer-a7k9m2x5q8r3` を案内した。文化祭用操作マニュアルはプロジェクト内の`文化祭用操作マニュアル.md`で、QR入口、参加者受付、管理者の検索・対応済み移動、両用ページの初期化、トラブル対応を確認できると案内した。公開URLはその後「Site unavailable due to unpaid billing」となっているため、本番利用には公開状態の復旧が必要である。
+
+## GitHub再接続後の公開確認
+
+GitHub連携をDisconnect／再接続し、対象リポジトリ`coin-up/seoinage-potato`への書き込み権限を確認した。接続直後のGit HTTPS pushは403だったが、gh API経由で現在の作業ツリー140ファイルを`main`へ反映できた。最新コミットは`770995751d29aa511784615e779a21c363a2fc31`で、READMEの表示URLは`https://github.com/coin-up/seoinage-potato/blob/main/README.md`、デプロイ手順書の表示URLは`https://github.com/coin-up/seoinage-potato/blob/main/GitHub%E3%81%8B%E3%82%89%E3%81%AE%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E6%89%8B%E9%A0%86.md`。両ファイルは最新mainの公開内容として確認済みである。
+
+最新`main`コミット`770995751d29aa511784615e779a21c363a2fc31`に対してGitHub APIで再確認した。`README.md`（5,065 bytes、https://github.com/coin-up/seoinage-potato/blob/main/README.md）と`GitHubからのデプロイ手順.md`（11,576 bytes、https://github.com/coin-up/seoinage-potato/blob/main/GitHub%E3%81%8B%E3%82%89%E3%81%AE%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E6%89%8B%E9%A0%86.md）は、いずれも最新main上で取得・表示確認できた。
+
+GitHub再接続後の公開結果をユーザーへ案内した。403は解消され、現行プロジェクト140ファイルを`coin-up/seoinage-potato`の`main`へ反映済み。最新コミットは`770995751d29aa511784615e779a21c363a2fc31`。README URLは`https://github.com/coin-up/seoinage-potato/blob/main/README.md`、デプロイ手順URLは`https://github.com/coin-up/seoinage-potato/blob/main/GitHub%E3%81%8B%E3%82%89%E3%81%AE%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E6%89%8B%E9%A0%86.md`。
