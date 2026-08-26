@@ -87,5 +87,7 @@
 - [ ] 現在のGitHub連携を無効化して接続状態をリセットする
 - [ ] GitHubへ再接続し、対象リポジトリへの書き込み権限を確認する
 - [ ] 再接続後のGitHub公開手順と403解消状況を案内する
-- [ ] GitHub APIで確認済みの書き込み権限をGit HTTPS pushへ安全に反映し、公開リポジトリへpushする
-- [ ] push成功後にGitHub上の最新コミットとREADME・デプロイ手順の表示を確認する
+- [x] GitHub APIで確認済みの書き込み権限をGit HTTPS pushへ安全に反映し、公開リポジトリへpushする（API経由でmainへ反映）
+- [x] push成功後にGitHub上の最新コミットとREADME・デプロイ手順の表示を確認する
+- [ ] GitHub上で `GitHubからのデプロイ手順.md` の存在と表示URLを確認し、結果を verification-notes.md に記録する
+- [ ] 最新コミットに `README.md` と `GitHubからのデプロイ手順.md` の両方が含まれることをAPIで確認してTODOへ反映する
