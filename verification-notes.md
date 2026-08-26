@@ -41,3 +41,28 @@ The participant page now presents the order-timing notice, input checks, pickup 
 Created `文化祭用操作マニュアル.md` with QR entry URLs, participant flow, staff roles, pending/completed handling, search, reset confirmation, synchronization guidance, troubleshooting, and a pre-opening checklist.
 
 After moving the participant form to the bottom, the live browser flow was rerun successfully: the buyer page accepted `Z999` from the bottom form after the notices, the management pages received it, and the subsequent search, completion, and cleanup steps passed. The test row was removed at the end.
+
+## Manual-to-site comparison
+
+| Manual requirement | Existing site implementation | Status |
+|---|---|---|
+| QR-only entry for buyer, admin, and combined roles | Three QR alias routes issue HttpOnly sessions; direct feature paths are blocked | Matches |
+| Buyer enters one letter plus three digits | Buyer form validates and normalizes the ticket code before submission | Matches |
+| Notices are read before entry | Buyer page now places timing, input-check, pickup, and help guidance above the bottom form | Matches |
+| Pending orders are oldest first | Admin and combined boards render pending orders in received-time order | Matches |
+| Search, complete, and completed list | Management pages provide partial-code search and move rows to completed | Matches |
+| Clear all with confirmation | Combined page uses an accessible confirmation dialog before deletion | Matches |
+| Multiple-device updates | SSE events update connected pages, with short-interval refresh as fallback | Matches |
+| Public production URL | The domain is configured, but the latest check showed Manus “Site unavailable due to unpaid billing” | Blocked by hosting billing state |
+
+No additional code change was required after comparing the uploaded manual; the manual describes the same implementation already present in the latest checkpoint.
+
+## Manual recheck after upload
+
+Using the current development preview, the buyer QR alias resolved to `/buyer` and showed the timing notice, input checks, pickup steps, and the ticket form below those notices. The admin QR alias resolved to `/admin` and showed the oldest-first pending list, search field, completion buttons, and completed list. The combined QR alias resolved to `/combined` and showed the ticket form, reset button, search, pending list, and completed list together. Mobile screenshots were captured for all three aliases; buyer and combined layouts remained readable and the aliases continued to use the existing QR-session flow.
+
+The configured production domain remains unavailable because Manus reports unpaid billing; production URL verification is therefore blocked until the hosting state is restored.
+
+## Manual upload recheck safety note
+
+The manual-upload recheck opened the current buyer, admin, and combined QR aliases successfully. A destructive end-to-end run was intentionally not performed because the management board already contained 4 pending and 5 completed live rows; the verification script refused to mutate or clear unrelated data. Existing end-to-end operation coverage remains documented from the controlled empty-state run, and the current manual-to-site comparison confirms the same routes and controls. The configured production domain still reports Manus unpaid-billing unavailability, so production URL verification remains pending until hosting is restored.
