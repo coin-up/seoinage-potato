@@ -167,3 +167,33 @@ GitHubリポジトリの公開とWebサイトの本番公開は別です。GitHu
 [6]: https://render.com/docs/free "Deploy for Free — Render Docs"
 [7]: https://render.com/docs/deploy-mysql "Deploy MySQL — Render Docs"
 [8]: https://docs.railway.com/guides/sse-vs-websockets "Choose Between SSE and WebSockets — Railway Docs"
+
+## 最短実行チェックリスト（Railway推奨）
+
+本番公開を実行する担当者は、次の順番で作業してください。コード変更は不要です。
+
+| 順番 | Railwayで行う操作 | 完了 |
+|---|---|---|
+| 1 | RailwayへGitHubアカウントでログインし、`coin-up/seoinage-potato`へのアクセスを許可する | □ |
+| 2 | **New Project → Deploy from GitHub repo**で`coin-up/seoinage-potato`を選択する | □ |
+| 3 | Web ServiceのBuild Commandを`pnpm build`、Start Commandを`pnpm start`にする | □ |
+| 4 | 同じProjectへMySQL Serviceを追加し、Web Serviceの`DATABASE_URL`へMySQLの接続文字列を参照設定する | □ |
+| 5 | `NODE_ENV=production`、`JWT_SECRET`、既存のManus関連環境変数をWeb ServiceのVariablesへ登録する | □ |
+| 6 | Variablesの変更を保存してDeployし、Build／Deployログのエラーがないことを確認する | □ |
+| 7 | Web Serviceの**Settings → Networking → Generate Domain**でHTTPSドメインを発行する | □ |
+| 8 | 発行ドメインへアクセスし、ルートのQR入口画面が表示されることを確認する | □ |
+| 9 | 本番ドメインへ置き換えた3つのQR入口を作成する（参加者用・管理者用・両用） | □ |
+| 10 | テスト番号`Z999`で登録、別端末で同期、検索、対応済み移動を確認し、確認後にテストデータだけ削除する | □ |
+| 11 | 文化祭開始前にDBバックアップを取得し、`文化祭当日バックアップ・障害時運用.md`のチェックを実施する | □ |
+
+RailwayのVariables変更は保存しただけでは本番へ反映されない場合があるため、画面の差分を確認してDeployまで完了させます。`DATABASE_URL`、`JWT_SECRET`、`BUILT_IN_FORGE_API_KEY`などの秘密値は、GitHub、QRコード、チャット本文へ貼り付けず、RailwayのVariablesへ直接入力してください。`VITE_`で始まる値はビルド時にブラウザへ含まれるため、秘密値を設定しないでください。
+
+Railwayの公開ドメインが`example.up.railway.app`になった場合、QR入口は次の形式です。
+
+```text
+https://example.up.railway.app/buyer-only-x5k9m2a7q8r3
+https://example.up.railway.app/admin-b4n6p1j9w2e8
+https://example.up.railway.app/buyer-a7k9m2x5q8r3
+```
+
+Railwayアカウントへのログイン、GitHubリポジトリ選択、課金設定、環境変数の実値入力は利用者本人の操作が必要です。本手順書は、その操作を安全に進めるための実行順と確認項目を提供します。

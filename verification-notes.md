@@ -116,3 +116,9 @@ Railway公式のPublic Networkingページでは、公開ドメインのGenerate
 Render公式のEnvironment Variablesページでは、DashboardのEnvironmentからキーと値を登録し、Save, rebuild, and deploy／Save and deploy／Save onlyを選択できること、秘密情報をソースへコミットしないことを確認した。参照: https://render.com/docs/configure-environment-variables
 
 Render公式のTLSページでは、`onrender.com`サブドメインとカスタムドメインに無料のマネージドTLSが提供され、HTTPはHTTPSへ自動リダイレクトされることを確認した。参照: https://render.com/docs/tls
+
+## 外部ホスティング実行案内の追加
+
+`GitHubからのデプロイ手順.md`へ、Railwayを第一候補とした最短実行チェックリストを追加した。GitHub接続、Web Service作成、MySQL追加、環境変数登録、Build／Start、HTTPSドメイン発行、本番QR作成、`Z999`による同期確認、テストデータ削除、開始前バックアップまでを順番に記載している。ログイン、課金設定、環境変数の実値入力は利用者本人の操作が必要であることも明記した。
+
+Railway推奨の外部ホスティング手順をユーザーへ案内した。内容はGitHub接続、`pnpm build`／`pnpm start`、MySQLと`DATABASE_URL`、環境変数、Generate DomainによるHTTPS、QR URLのドメイン差し替え、`Z999`での本番確認、テストデータ削除、開始前バックアップである。Railwayの無料枠は無期限・完全無料ではなく、現行料金ページ上は月1ドル分の利用クレジットであること、課金設定と上限確認が必要なことも案内した。
