@@ -50,7 +50,7 @@ export function PotatoShell({ mode, title, eyebrow, description, pendingCount = 
           </div>
         </header>
         <div className="sp-hero mb-5 sm:mb-7">
-          <img src="/manus-storage/376_d1ff0108.png" alt="揚げたてのフライドポテトと谷口の背負い投げポテト広告" />
+          <img src="/potato-ad.webp" alt="揚げたてのフライドポテトと谷口の背負い投げポテト広告" />
           <div className="sp-hero-copy">
             <h2>揚げたて、最強。</h2>
             <p>谷口の背負い投げポテト / うまさ、投げ込め。</p>

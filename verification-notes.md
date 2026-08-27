@@ -158,3 +158,5 @@ GitHub mainのPostgreSQL対応コミット`0e1b3cca97af3671cedbbb04c671496f0b3bc
 最新デプロイはLiveで、Render管理画面のログ欄は`Failed to fetch (api.render.com)`となり、`db:push`の明示的な実行行を追加取得できなかった。そのため、`db:push`のログ証拠については未確認として扱い、断定しない。一方、PostgreSQL実DBに対して注文登録、管理者検索、対応済み移動、両用ページの全件初期化を実行できたため、スキーマ適用済み・アプリ接続済みであることは実DBの主要フロー成功で確認した。Renderのログ取得が復旧した場合に、起動ログの補足確認を行う。
 
 SSE本番検証では、両用QR入口の同一セッション上でEventSourceを2本同時接続し、両方の`ready`イベントを確認した。確認用チケット`X930`を登録すると、両接続が同一`orders`イベント（同じ`changedAt`）を受信した。Render本番で注文変更のSSEリアルタイム配信が機能していることを確認した。X930は後続の全件初期化で削除する。
+
+Render本番の画面では広告画像枠が空白になり、`/manus-storage/376_d1ff0108.png`が外部Render環境から取得できていない。クライアント参照箇所は`client/src/components/AccessGate.tsx`と`client/src/components/PotatoShell.tsx`で、同じ参照はローカルのWebDevプレビューでは画像表示できる。Render配信用に画像参照先を変更する必要がある。
