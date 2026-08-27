@@ -1,11 +1,10 @@
-import { asc, eq } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
+import { eq, asc } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/node-postgres";
 import { InsertPotatoOrder, InsertUser, potatoOrders, users } from "../drizzle/schema";
-import { ENV } from './_core/env';
+import { ENV } from "./_core/env";
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
-// Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
@@ -19,111 +18,74 @@ export async function getDb() {
 }
 
 export async function upsertUser(user: InsertUser): Promise<void> {
-  if (!user.openId) {
-    throw new Error("User openId is required for upsert");
-  }
-
+  if (!user.openId) throw new Error("User openId is required for upsert");
   const db = await getDb();
   if (!db) {
     console.warn("[Database] Cannot upsert user: database not available");
     return;
   }
 
-  try {
-    const values: InsertUser = {
-      openId: user.openId,
-    };
-    const updateSet: Record<string, unknown> = {};
-
-    const textFields = ["name", "email", "loginMethod"] as const;
-    type TextField = (typeof textFields)[number];
-
-    const assignNullable = (field: TextField) => {
-      const value = user[field];
-      if (value === undefined) return;
-      const normalized = value ?? null;
-      values[field] = normalized;
-      updateSet[field] = normalized;
-    };
-
-    textFields.forEach(assignNullable);
-
-    if (user.lastSignedIn !== undefined) {
-      values.lastSignedIn = user.lastSignedIn;
-      updateSet.lastSignedIn = user.lastSignedIn;
+  const values: InsertUser = { openId: user.openId };
+  const updateSet: Record<string, unknown> = {};
+  const textFields = ["name", "email", "loginMethod"] as const;
+  for (const field of textFields) {
+    if (user[field] !== undefined) {
+      values[field] = user[field] ?? null;
+      updateSet[field] = user[field] ?? null;
     }
-    if (user.role !== undefined) {
-      values.role = user.role;
-      updateSet.role = user.role;
-    } else if (user.openId === ENV.ownerOpenId) {
-      values.role = 'admin';
-      updateSet.role = 'admin';
-    }
-
-    if (!values.lastSignedIn) {
-      values.lastSignedIn = new Date();
-    }
-
-    if (Object.keys(updateSet).length === 0) {
-      updateSet.lastSignedIn = new Date();
-    }
-
-    await db.insert(users).values(values).onDuplicateKeyUpdate({
-      set: updateSet,
-    });
-  } catch (error) {
-    console.error("[Database] Failed to upsert user:", error);
-    throw error;
   }
+  if (user.lastSignedIn !== undefined) {
+    values.lastSignedIn = user.lastSignedIn;
+    updateSet.lastSignedIn = user.lastSignedIn;
+  }
+  if (user.role !== undefined) {
+    values.role = user.role;
+    updateSet.role = user.role;
+  } else if (user.openId === ENV.ownerOpenId) {
+    values.role = "admin";
+    updateSet.role = "admin";
+  }
+  if (!values.lastSignedIn) values.lastSignedIn = new Date();
+  if (Object.keys(updateSet).length === 0) updateSet.lastSignedIn = new Date();
+
+  await db.insert(users).values(values).onConflictDoUpdate({
+    target: users.openId,
+    set: updateSet,
+  });
 }
 
 export async function getUserByOpenId(openId: string) {
   const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot get user: database not available");
-    return undefined;
-  }
-
+  if (!db) return undefined;
   const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
-
-  return result.length > 0 ? result[0] : undefined;
+  return result[0];
 }
 
 export async function getPotatoOrders(search?: string) {
   const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot list orders: database not available");
-    return [];
-  }
-
+  if (!db) return [];
   const rows = await db.select().from(potatoOrders).orderBy(asc(potatoOrders.receivedAt));
   const normalizedSearch = search?.trim().toUpperCase();
-  if (!normalizedSearch) return rows;
-
-  return rows.filter(order => order.ticketCode.includes(normalizedSearch));
+  return normalizedSearch ? rows.filter(order => order.ticketCode.includes(normalizedSearch)) : rows;
 }
 
 export async function createPotatoOrder(order: InsertPotatoOrder) {
   const db = await getDb();
   if (!db) throw new Error("Database is not available");
-  const result = await db.insert(potatoOrders).values(order);
-  return result[0]?.insertId;
+  const rows = await db.insert(potatoOrders).values(order).returning({ id: potatoOrders.id });
+  return rows[0]?.id;
 }
 
 export async function completePotatoOrder(id: number) {
   const db = await getDb();
   if (!db) throw new Error("Database is not available");
-  const result = await db
-    .update(potatoOrders)
-    .set({ status: "completed", completedAt: Date.now() })
-    .where(eq(potatoOrders.id, id));
-  return result[0]?.affectedRows ?? 0;
+  const rows = await db.update(potatoOrders).set({ status: "completed", completedAt: Date.now() }).where(eq(potatoOrders.id, id)).returning({ id: potatoOrders.id });
+  return rows.length;
 }
 
 export async function clearPotatoOrders() {
   const db = await getDb();
   if (!db) throw new Error("Database is not available");
-  const result = await db.delete(potatoOrders);
-  return result[0]?.affectedRows ?? 0;
+  const rows = await db.delete(potatoOrders).returning({ id: potatoOrders.id });
+  return rows.length;
 }
-

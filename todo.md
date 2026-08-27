@@ -102,3 +102,31 @@
 - [x] GitHubリポジトリからの外部ホスティング手順を、ユーザーが実行できる形で案内する
 - [x] Railway推奨の外部ホスティング手順をユーザー向けメッセージで案内する
 - [x] 外部ホスティング案内の実施記録を verification-notes.md に保存する
+
+- [x] RailwayでGitHubリポジトリ`coin-up/seoinage-potato`のデプロイ成功を確認する
+- [x] RailwayにMySQL Serviceを追加し、Web Serviceの`DATABASE_URL`へ参照設定する
+- [ ] Railwayへ本番環境変数を登録し、再デプロイ成功を確認する
+- [ ] RailwayのHTTPS公開ドメインを発行し、本番QR入口URLを確定する
+- [ ] Railway本番環境で登録・同期・検索・対応済み移動の疎通確認を行う
+
+- [x] Railway無料プランのリソース作成上限エラーを検証メモへ記録する
+- [x] Railway以外のNode.js＋MySQL構成を公式条件で比較する
+- [x] 選定した代替ホスティングのGitHubデプロイ手順をユーザーへ案内する
+- [ ] 代替ホスティングでHTTPS・QR入口・DB接続・SSE同期を確認する
+
+- [x] Aiven以外の無料MySQL互換データベース候補を公式情報で調査する
+- [x] 無料候補とRender Freeの接続条件・停止条件・容量制限を比較する
+- [ ] 無料優先で採用する代替構成と手順を案内する
+
+- [x] 無料・安全性・登録容易性を優先したRender Free＋PostgreSQL構成へ移行方針を記録する
+- [x] DrizzleスキーマとDBヘルパーをMySQLからPostgreSQLへ移行する
+- [ ] PostgreSQL対応後のマイグレーション、型チェック、テスト、本番ビルドを確認する
+- [x] Render無料公開手順とPostgreSQLの無料枠・停止・保存制約を文書化する
+- [x] 移行版をユーザーがRenderへ登録できる形で案内する
+- [ ] Renderまたは検証用PostgreSQLへ`pnpm db:push`を実行し、テーブル作成成功を確認する
+- [ ] PostgreSQL実DBで注文登録・検索・対応・初期化の主要フローを再確認し、検証メモへ記録する
+- [ ] Renderの`DATABASE_URL`に残ったRailway MySQL（3306）接続先をRender PostgreSQL Internal URL（5432）へ置き換える
+- [ ] 接続先修正後のRender再デプロイで`db:push`とアプリ起動成功を確認する
+- [ ] PostgreSQL対応コードがGitHub mainへ未反映でRenderが古いMySQLコミットを取得した問題を検証メモへ記録する
+- [ ] PostgreSQL対応済みコード・package.json・Drizzle設定をGitHub mainへ反映する
+- [ ] Renderで新しいPostgreSQL対応コミットを選択して再デプロイする

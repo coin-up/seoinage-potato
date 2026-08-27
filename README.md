@@ -6,11 +6,11 @@
 
 - フロントエンド: React + TypeScript + Vite
 - サーバー: Node.js + Express + tRPC
-- データベース: MySQL + Drizzle ORM
+- データベース: PostgreSQL + Drizzle ORM
 - リアルタイム反映: Server-Sent Events（SSE）と自動再取得
 - QRアクセス: サーバー検証済みのHttpOnlyセッションCookie
 
-GitHub Pagesなどの静的ホスティングだけでは、Express、tRPC、MySQL、SSE、QRセッションは動作しません。Node.js Web ServiceとMySQLを提供するホスティングへデプロイしてください。
+GitHub Pagesなどの静的ホスティングだけでは、Express、tRPC、PostgreSQL、SSE、QRセッションは動作しません。Node.js Web ServiceとPostgreSQLを提供するホスティングへデプロイしてください。
 
 ## ローカル起動
 
@@ -30,7 +30,7 @@ pnpm dev
 
 ## 本番デプロイ
 
-GitHub連携に対応したNode.js Web Serviceへリポジトリを接続し、次のコマンドを設定します。
+無料優先の場合は、GitHub連携に対応したRender Free Web ServiceとPostgreSQLを組み合わせます。Render Free Web Serviceは一定時間アクセスがないと停止するため、文化祭開始前に一度アクセスして起動状態を確認してください。Render Free Postgresには保存期間・容量・バックアップの制約があるため、文化祭終了後は必要な記録を別途保存します。
 
 | 設定 | 値 |
 |---|---|
@@ -38,8 +38,9 @@ GitHub連携に対応したNode.js Web Serviceへリポジトリを接続し、�
 | Start Command | `pnpm start` |
 | Node | 現行Node.js LTS |
 | Port | ホスティングサービスが注入する`PORT`を使用 |
+| Database | PostgreSQL |
 
-MySQLサービスを同じプロジェクト、またはTLS接続可能な外部サービスへ用意し、接続文字列を`DATABASE_URL`へ設定します。初回のスキーマ反映は、バックアップを確認してから次を実行します。
+PostgreSQLサービスを同じプロジェクト、またはTLS接続可能な外部サービスへ用意し、接続文字列を`DATABASE_URL`へ設定します。初回のスキーマ反映は、バックアップを確認してから次を実行します。
 
 ```bash
 pnpm db:push
@@ -52,7 +53,7 @@ pnpm db:push
 | 変数 | 用途 |
 |---|---|
 | `NODE_ENV` | 本番では`production` |
-| `DATABASE_URL` | MySQL接続文字列 |
+| `DATABASE_URL` | PostgreSQL接続文字列 |
 | `JWT_SECRET` | セッションCookie署名用の秘密値 |
 | `PORT` | ホスティングサービスが自動注入 |
 | `VITE_APP_ID` | Manus OAuthアプリ識別子 |
@@ -103,8 +104,8 @@ pnpm test
 pnpm build
 ```
 
-SSEが接続できない環境でも、自動再取得によって一覧の更新を補完します。ただし、Nodeサービス、API、MySQL、HTTPSがすべて利用可能であることが前提です。
+SSEが接続できない環境でも、自動再取得によって一覧の更新を補完します。ただし、Nodeサービス、API、PostgreSQL、HTTPSがすべて利用可能であることが前提です。
 
 ## 詳細手順
 
-外部ホスティングの具体的な設定、Railway／Renderの構成、SSEとQRセッションの注意点は、リポジトリ内の[`GitHubからのデプロイ手順.md`](./GitHubからのデプロイ手順.md)を参照してください。
+外部ホスティングの具体的な設定、Render無料枠とPostgreSQLの制約、SSEとQRセッションの注意点は、リポジトリ内の[`GitHubからのデプロイ手順.md`](./GitHubからのデプロイ手順.md)を参照してください。

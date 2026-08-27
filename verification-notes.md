@@ -122,3 +122,20 @@ Render公式のTLSページでは、`onrender.com`サブドメインとカスタ
 `GitHubからのデプロイ手順.md`へ、Railwayを第一候補とした最短実行チェックリストを追加した。GitHub接続、Web Service作成、MySQL追加、環境変数登録、Build／Start、HTTPSドメイン発行、本番QR作成、`Z999`による同期確認、テストデータ削除、開始前バックアップまでを順番に記載している。ログイン、課金設定、環境変数の実値入力は利用者本人の操作が必要であることも明記した。
 
 Railway推奨の外部ホスティング手順をユーザーへ案内した。内容はGitHub接続、`pnpm build`／`pnpm start`、MySQLと`DATABASE_URL`、環境変数、Generate DomainによるHTTPS、QR URLのドメイン差し替え、`Z999`での本番確認、テストデータ削除、開始前バックアップである。Railwayの無料枠は無期限・完全無料ではなく、現行料金ページ上は月1ドル分の利用クレジットであること、課金設定と上限確認が必要なことも案内した。
+
+## Railway無料プラン上限と代替候補（2026-08-27）
+Railwayで新規プロジェクト作成時に「Free plan resource provision limit exceeded. Please upgrade to provision more resources!」が表示され、追加リソースの作成が停止した。これはアプリのビルドエラーではなく、Railwayアカウント側の無料プランのリソース作成上限によるもの。
+
+Render公式情報を確認した。RenderはGitHub接続のNode.js Web Serviceを提供し、Free Web Serviceでは無料TLSとカスタムドメインが利用できるが、15分間インバウンド通信がないとスリープし、再起動に約1分かかる。また、Render公式のMySQL手順はDockerベースのPrivate Serviceと`/var/lib/mysql`への永続Diskを使う構成で、Freeインスタンスには対応しない。このため無料運用では、Node.js Web ServiceとMySQLの料金・永続性を別途確認する必要がある。
+
+Aiven公式のFree MySQLは1GBストレージ・1GB RAM・単一ノード・自動バックアップを含み、クレジットカード不要と案内されているが、非アクティブ時に停止し、高トラフィック本番には非推奨である。参照URL：Render Free https://render.com/docs/free、Render Node Express https://render.com/docs/deploy-node-express-app、Render MySQL https://render.com/docs/deploy-mysql、Aiven Free MySQL https://aiven.io/free-mysql-database
+
+## Aiven以外の無料候補追加調査（2026-08-27）
+TiDB Cloud Starterの公式情報を確認した。TiDB Cloud StarterはMySQL互換のマネージドDBで、無料枠内ではクレジットカード不要。1インスタンスあたり月間50M Request Units、行ストレージ5GiB、列ストレージ5GiBが無料で、1 Organizationにつき最初の5インスタンスに無料枠が付く。無料枠を超えると新規接続が制限されるため、文化祭の小規模注文管理なら使用量を監視する必要がある。TiDB Cloud StarterはTLS接続を要求し、接続情報にユーザー名プレフィックスを含める必要がある。
+
+Render Free Web ServiceはNode.jsアプリをGitHubから公開できるが、15分間通信がないと停止し復帰に約1分かかるため、本番用途には注意が必要。Render標準の無料DBはPostgres／Key Valueで、このアプリのMySQL構成にはそのまま使えない。無料優先の代替候補は、Render Free＋TiDB Cloud Starterの組み合わせとする。参照URL：https://docs.pingcap.com/tidbcloud/select-cluster-tier/、https://www.pingcap.com/tidb-cloud-starter-pricing-details/、https://render.com/docs/free、https://render.com/docs/deploy-node-express-app
+
+## PostgreSQL移行（2026-08-27）
+無料・安全性・登録容易性を優先し、データベースをMySQLからPostgreSQLへ移行した。`drizzle/schema.ts`を`pg-core`、`drizzle.config.ts`を`postgresql`、`server/db.ts`を`drizzle-orm/node-postgres`へ変更し、不要な`mysql2`依存を削除、`pg`と`@types/pg`を追加した。既存のMySQL用Drizzleメタデータは`drizzle/meta.mysql-backup/`へ退避し、PostgreSQL用journalと`drizzle/0000_curly_jack_power.sql`を生成した。生成SQLは`user_role`・`order_status` enum、`users`、`potatoOrders`の作成のみで、DROPや既存データ削除は含まれない。
+
+検証結果：`pnpm check`成功、Vitest 4ファイル・9テスト成功、`pnpm build`成功。READMEと`GitHubからのデプロイ手順.md`をRender Free＋Render Postgres Free構成へ更新した。Render Freeはスリープ・無料Postgresの保存期間／容量／バックアップ制約があるため、文化祭前に起動確認と別途バックアップを行う。
