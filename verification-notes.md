@@ -139,3 +139,22 @@ Render Free Web ServiceはNode.jsアプリをGitHubから公開できるが、15
 無料・安全性・登録容易性を優先し、データベースをMySQLからPostgreSQLへ移行した。`drizzle/schema.ts`を`pg-core`、`drizzle.config.ts`を`postgresql`、`server/db.ts`を`drizzle-orm/node-postgres`へ変更し、不要な`mysql2`依存を削除、`pg`と`@types/pg`を追加した。既存のMySQL用Drizzleメタデータは`drizzle/meta.mysql-backup/`へ退避し、PostgreSQL用journalと`drizzle/0000_curly_jack_power.sql`を生成した。生成SQLは`user_role`・`order_status` enum、`users`、`potatoOrders`の作成のみで、DROPや既存データ削除は含まれない。
 
 検証結果：`pnpm check`成功、Vitest 4ファイル・9テスト成功、`pnpm build`成功。READMEと`GitHubからのデプロイ手順.md`をRender Free＋Render Postgres Free構成へ更新した。Render Freeはスリープ・無料Postgresの保存期間／容量／バックアップ制約があるため、文化祭前に起動確認と別途バックアップを行う。
+
+## Render旧コミット取得の原因と対処（2026-08-27）
+Renderの失敗ログでは、コミット`7709957`が`mysql2`／`connectToMySQL`を実行し、`10.24.32.59:3306`への`ECONNREFUSED`が発生していた。これはRenderがPostgreSQL移行前のGitHubコードを取得していたためで、RenderのDATABASE_URL設定だけの問題ではなかった。PostgreSQL対応済みの`drizzle/schema.ts`、`server/db.ts`、`drizzle.config.ts`、`package.json`、`pnpm-lock.yaml`と関連文書を統合し、GitHubの先行コミットと競合解消後、`coin-up/seoinage-potato`の`main`へコミット`0e1b3cca97af3671cedbbb04c671496f0b3bc92b`として反映した。次はRenderのManual Deployで最新コミットを取得し、MySQL参照が消え、PostgreSQLのマイグレーションと起動が成功することを確認する。
+
+## Render PostgreSQL本番疎通（2026-08-27）
+GitHub mainのPostgreSQL対応コミット`0e1b3cca97af3671cedbbb04c671496f0b3bc92b`をRenderへ手動デプロイした。Renderログで`[OAuth] Initialized with baseURL: https://api.manus.im`、`Server running on http://localhost:10000/`、公開URL、Liveを確認し、旧MySQLの3306接続エラーは解消した。
+
+本番QR入口`https://seoinage-potato.onrender.com/buyer-only-x5k9m2a7q8r3`から参加者ページへ遷移し、確認用`X927`を登録したところ「X927を受付しました」と表示された。管理者QR入口`https://seoinage-potato.onrender.com/admin-b4n6p1j9w2e8`では未対応1件として`X927`が表示され、対応操作後に未対応0件・対応済み1件へ移動した。PostgreSQL実DBへの登録・取得・状態更新が成功した証拠である。`X927`は確認用データとして対応済みに移動済みで、実注文データは操作していない。
+
+検索検証では管理者QR入口で`X928`を検索し、未対応一覧が`X928`のみへ絞り込まれることを確認した。検索欄を維持したまま対応操作を行い、画面更新後は未対応0件・対応済み1件（`X928`）となった。`X927`は先行テストで対応済みのため、対応済み総数は2件になった。
+
+全件初期化検証では、両用QR入口から管理画面を開き、対応済みテストデータ`X927`・`X928`の2件だけが表示されていることを確認した。確認ダイアログで初期化を確定後、「2件の受付データを初期化しました」と表示され、再取得後に未対応0件・対応済み0件となった。実注文データは表示されていない状態で実施した。
+
+補足：Renderの本番Start Commandは`pnpm db:push && pnpm start`に設定してデプロイした。失敗時ログでは`No schema changes, nothing to migrate`まで実行された後、旧MySQL URLへ接続して失敗していた。新コミット・Render PostgreSQL Internal URLへ修正後のデプロイはLiveとなり、その後の実DB注文登録が成功したため、PostgreSQLスキーマ適用とアプリ起動の組み合わせが機能していることを確認した。
+
+## Renderログ取得障害の扱い（2026-08-27）
+最新デプロイはLiveで、Render管理画面のログ欄は`Failed to fetch (api.render.com)`となり、`db:push`の明示的な実行行を追加取得できなかった。そのため、`db:push`のログ証拠については未確認として扱い、断定しない。一方、PostgreSQL実DBに対して注文登録、管理者検索、対応済み移動、両用ページの全件初期化を実行できたため、スキーマ適用済み・アプリ接続済みであることは実DBの主要フロー成功で確認した。Renderのログ取得が復旧した場合に、起動ログの補足確認を行う。
+
+SSE本番検証では、両用QR入口の同一セッション上でEventSourceを2本同時接続し、両方の`ready`イベントを確認した。確認用チケット`X930`を登録すると、両接続が同一`orders`イベント（同じ`changedAt`）を受信した。Render本番で注文変更のSSEリアルタイム配信が機能していることを確認した。X930は後続の全件初期化で削除する。
