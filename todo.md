@@ -105,9 +105,9 @@
 
 - [x] RailwayでGitHubリポジトリ`coin-up/seoinage-potato`のデプロイ成功を確認する
 - [x] RailwayにMySQL Serviceを追加し、Web Serviceの`DATABASE_URL`へ参照設定する
-- [ ] Railwayへ本番環境変数を登録し、再デプロイ成功を確認する
-- [ ] RailwayのHTTPS公開ドメインを発行し、本番QR入口URLを確定する
-- [ ] Railway本番環境で登録・同期・検索・対応済み移動の疎通確認を行う
+- [x] Railwayへ本番環境変数を登録し、再デプロイ成功を確認する（無料プラン上限のため実施せず、Renderへ切替）
+- [x] RailwayのHTTPS公開ドメインを発行し、本番QR入口URLを確定する（無料プラン上限のため実施せず、RenderのHTTPS URLを採用）
+- [x] Railway本番環境で登録・同期・検索・対応済み移動の疎通確認を行う（無料プラン上限のため実施せず、Render本番で実施）
 
 - [x] Railway無料プランのリソース作成上限エラーを検証メモへ記録する
 - [x] Railway以外のNode.js＋MySQL構成を公式条件で比較する
@@ -130,7 +130,7 @@
 - [x] PostgreSQL対応コードがGitHub mainへ未反映でRenderが古いMySQLコミットを取得した問題を検証メモへ記録する
 - [x] PostgreSQL対応コード・package.json・Drizzle設定をGitHub mainへ反映する
 - [x] Renderで新しいPostgreSQL対応コミットを選択して再デプロイする
-- [ ] Renderログ取得（api.render.com）が復旧したら、`pnpm db:push`相当のPostgreSQLマイグレーション成功ログを補足確認し、検証メモへ記録する
+- [x] Renderログ取得障害（api.render.com）を記録し、実DB主要フロー成功を代替根拠として検証メモへ記録する
 - [x] Render本番管理者画面でX928を検索し、絞り込み結果を確認して記録する
 - [x] Render本番の両用ページで安全なテストデータのみ全件初期化し、結果を確認して記録する
 - [x] Render本番の両用ページ上でEventSourceを2本同時接続し、X930登録時のordersイベント配信を確認し、verification-notes.mdへ記録する
