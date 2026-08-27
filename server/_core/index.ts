@@ -11,6 +11,7 @@ import { registerQrAccessRoutes } from "../qrAccess";
 import { registerRealtimeRoutes } from "../realtime";
 import { registerSiteConfigRoute } from "../siteConfig";
 import { serveStatic, setupVite } from "./vite";
+import { getPreferredPort, shouldProbeForPort } from "./port";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -57,8 +58,9 @@ async function startServer() {
     serveStatic(app);
   }
 
-  const preferredPort = parseInt(process.env.PORT || "3000");
-  const port = await findAvailablePort(preferredPort);
+  const preferredPort = getPreferredPort(process.env.PORT);
+  // Render provides PORT and routes traffic to it; probing is only needed for local development.
+  const port = shouldProbeForPort(process.env.PORT) ? await findAvailablePort(preferredPort) : preferredPort;
 
   if (port !== preferredPort) {
     console.log(`Port ${preferredPort} is busy, using port ${port} instead`);
