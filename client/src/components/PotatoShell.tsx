@@ -11,6 +11,7 @@ type PotatoShellProps = {
   pendingCount?: number;
   completedCount?: number;
   syncing?: boolean;
+  showStats?: boolean;
   children: ReactNode;
 };
 
@@ -20,7 +21,7 @@ const modeLabels: Record<PageMode, string> = {
   combined: "受付＆管理",
 };
 
-export function PotatoShell({ mode, title, eyebrow, description, pendingCount = 0, completedCount = 0, syncing = false, children }: PotatoShellProps) {
+export function PotatoShell({ mode, title, eyebrow, description, pendingCount = 0, completedCount = 0, syncing = false, showStats = true, children }: PotatoShellProps) {
   return (
     <main className="sp-app min-h-screen overflow-hidden px-4 py-4 text-ink sm:px-7 sm:py-7">
       <div className="sp-deco sp-deco-circle-mint" />
@@ -44,10 +45,10 @@ export function PotatoShell({ mode, title, eyebrow, description, pendingCount = 
             <h1 className="sp-display mt-3 max-w-4xl text-4xl uppercase leading-[0.98] sm:text-6xl lg:text-7xl">{title}</h1>
             <p className="mt-3 max-w-2xl text-sm font-semibold leading-6 text-ink/65 sm:text-base">{description}</p>
           </div>
-          <div className="flex shrink-0 items-center gap-2 self-start sm:self-end">
+          {showStats && <div className="flex shrink-0 items-center gap-2 self-start sm:self-end">
             <StatChip icon={<Clock3 size={15} />} value={pendingCount} label="未対応" tone="yellow" />
             <StatChip icon={<Check size={15} />} value={completedCount} label="対応済" tone="mint" />
-          </div>
+          </div>}
         </header>
         <div className="sp-hero mb-5 sm:mb-7">
           <img src="/potato-ad.webp" alt="揚げたてのフライドポテトと谷口の背負い投げポテト広告" />

@@ -9,7 +9,7 @@ export default function BuyerPage() {
   if (!allowed) return <AccessBlocked mode="buyer" />;
 
   return (
-    <PotatoShell mode="buyer" title="受付はここから。" eyebrow="購入者受付" description="QRチケットの番号を入力して、お受け取りの受付を完了してください。">
+    <PotatoShell mode="buyer" title="受付はここから。" eyebrow="購入者受付" description="QRチケットの番号を入力して、お受け取りの受付を完了してください。" showStats={false}>
       <div className="space-y-5">
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1.35fr)_minmax(280px,0.65fr)]">
           <div className="space-y-4">
