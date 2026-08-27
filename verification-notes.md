@@ -162,3 +162,7 @@ SSE本番検証では、両用QR入口の同一セッション上でEventSource�
 Render本番の画面では広告画像枠が空白になり、`/manus-storage/376_d1ff0108.png`が外部Render環境から取得できていない。クライアント参照箇所は`client/src/components/AccessGate.tsx`と`client/src/components/PotatoShell.tsx`で、同じ参照はローカルのWebDevプレビューでは画像表示できる。Render配信用に画像参照先を変更する必要がある。
 
 Render本番の`https://seoinage-potato.onrender.com/buyer-only-x5k9m2a7q8r3`を再読み込みし、広告画像が正常表示されることを確認した。`/potato-ad.webp`をアプリ内公開資産として配信する修正コミット`0106c3f`が反映済み。
+
+Render Freeの本番URLを連続測定した結果、現在のアクセスは1回目4.989秒、2回目3.956秒、いずれもHTTP 200だった。非稼働15分後の真のスリープ復帰は待機時間の都合で未再現だが、Render管理画面のFreeプラン警告（初回は50秒以上遅延し得る）は確認済み。
+
+スマートフォン表示では、広告画像を4:3で表示し、追加キャッチコピーを画像上に重ねず画像直下の黒帯へ移動するCSS調整を実施。これにより広告内の文字・人物・ポテトがキャッチコピーで隠れにくくなる。型チェック、9テスト、本番ビルドは成功。ローカルWebDevのスクリーンショット取得は失敗したため、Render再デプロイ後の実機画面で最終確認する。
