@@ -160,3 +160,5 @@ GitHub mainのPostgreSQL対応コミット`0e1b3cca97af3671cedbbb04c671496f0b3bc
 SSE本番検証では、両用QR入口の同一セッション上でEventSourceを2本同時接続し、両方の`ready`イベントを確認した。確認用チケット`X930`を登録すると、両接続が同一`orders`イベント（同じ`changedAt`）を受信した。Render本番で注文変更のSSEリアルタイム配信が機能していることを確認した。X930は後続の全件初期化で削除する。
 
 Render本番の画面では広告画像枠が空白になり、`/manus-storage/376_d1ff0108.png`が外部Render環境から取得できていない。クライアント参照箇所は`client/src/components/AccessGate.tsx`と`client/src/components/PotatoShell.tsx`で、同じ参照はローカルのWebDevプレビューでは画像表示できる。Render配信用に画像参照先を変更する必要がある。
+
+Render本番の`https://seoinage-potato.onrender.com/buyer-only-x5k9m2a7q8r3`を再読み込みし、広告画像が正常表示されることを確認した。`/potato-ad.webp`をアプリ内公開資産として配信する修正コミット`0106c3f`が反映済み。
