@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { trpc } from "@/lib/trpc";
 import { useRealtimeSync } from "@/hooks/useRealtimeSync";
+import { normalizeTicketCodeInput } from "@/lib/ticketCode";
 
 export function TicketForm({ compact = false }: { compact?: boolean }) {
   const [ticketCode, setTicketCode] = useState("");
@@ -38,7 +39,7 @@ export function TicketForm({ compact = false }: { compact?: boolean }) {
           <label htmlFor="ticket-code" className="mb-2 block text-sm font-black uppercase tracking-[0.16em] text-ink/80">英字1文字 + 3桁番号</label>
           <div className="flex flex-col gap-3 sm:flex-row">
             <div className="relative flex-1">
-              <Input id="ticket-code" value={ticketCode} onChange={event => setTicketCode(event.target.value.replace(/[^a-z0-9]/gi, "").slice(0, 4).toUpperCase())} placeholder="例：A123" autoComplete="off" autoCapitalize="characters" inputMode="text" aria-describedby="ticket-help" className="sp-input h-14 rounded-2xl border-2 border-ink bg-cream px-5 text-xl font-black uppercase tracking-[0.2em] text-ink placeholder:font-bold placeholder:tracking-normal placeholder:text-ink/50 focus-visible:ring-4 focus-visible:ring-mint/50 focus-visible:ring-offset-2" />
+              <Input id="ticket-code" value={ticketCode} onChange={event => setTicketCode(normalizeTicketCodeInput(event.target.value))} placeholder="例：A123" autoComplete="off" autoCapitalize="characters" inputMode="text" aria-describedby="ticket-help" className="sp-input h-14 rounded-2xl border-2 border-ink bg-cream px-5 text-xl font-black uppercase tracking-[0.2em] text-ink placeholder:font-bold placeholder:tracking-normal placeholder:text-ink/50 focus-visible:ring-4 focus-visible:ring-mint/50 focus-visible:ring-offset-2" />
               {ticketCode.length > 0 && <button type="button" aria-label="入力を消去" onClick={() => setTicketCode("")} className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-ink/70 hover:bg-peach hover:text-ink"><X size={18} /></button>}
             </div>
             <Button type="submit" disabled={!isValid || register.isPending} className="sp-button h-14 rounded-2xl bg-red px-6 text-base font-black text-cream shadow-[3px_3px_0_var(--ink)] hover:bg-red-dark disabled:cursor-not-allowed disabled:bg-ink/20 disabled:text-ink/45 sm:min-w-40">{register.isPending ? "送信中…" : <><span>受付する</span><ChevronRight size={19} /></>}</Button>
